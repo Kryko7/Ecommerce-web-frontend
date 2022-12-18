@@ -101,11 +101,33 @@ export default function SignUp() {
                 />
               </Grid>
               <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="Address"
+                  label="Address"
+                  type="Address"
+                  id="address"
+                  autoComplete="address"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="Telephone Number"
+                  label="Telephone Number"
+                  type="Telephone Number"
+                  id="telephoneNumber"
+                  autoComplete="telephoneNumber"
+                />
+              </Grid>
+              {/* <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
                   label="I want to receive inspiration, marketing promotions and updates via email."
                 />
-              </Grid>
+              </Grid> */}
             </Grid>
             <Button
               type="submit"
@@ -117,7 +139,7 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="http://localhost:3000/SignIn" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
