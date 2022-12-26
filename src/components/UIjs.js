@@ -14,6 +14,7 @@ const { Header, Content, Sider } = Layout;
 // })
 
 
+
 const items1 = ['SignIn', 'SignUp', 'Cart', 'Reports'].map((key) => ({
   key,
   label: `${key}`,
@@ -21,27 +22,44 @@ const items1 = ['SignIn', 'SignUp', 'Cart', 'Reports'].map((key) => ({
 }));
 
 
-const items3 = [ShoppingOutlined].map((icon, index) => {
-  const key = String(index + 1);
-  return {
-    key: `sub${key}`,
-    icon: React.createElement(icon),
-    label: `subnav ${key}`,
-    children: new Array(4).fill(null).map((_, j) => {
-      const subKey = index * 4 + j + 1;
-      return {
-        key: subKey,
-        label: `option${subKey}`,
-      };
-    }),
-  };
-});
+// const handleMenuItemClick = (key) => {
+  
+//   axios.get(`/api/ui/${key}`)
+//     .then((response) => {
+//       // Process the data here
+//       setCategoryID(key);
+//     })
+//     .catch((error) => {
+//       console.error(error);
+//     });
+// };
+
+
+
+// const items3 = [ShoppingOutlined].map((icon, index) => {
+//   const key = String(index + 1);
+//   return {
+//     key: `sub${key}`,
+//     icon: React.createElement(icon),
+//     label: `subnav ${key}`,
+//     children: new Array(4).fill(null).map((_, j) => {
+//       const subKey = index * 4 + j + 1;
+//       return {
+//         key: subKey,
+//         label: `option${subKey}`,
+//         onclick: () => handleMenuItemClick(subKey),
+//       };
+//     }),
+//   };
+// });
 const UIjs = () => {
   
   const [categories, setCategories] = useState([]);
+  const [activeCategory, setActiveCategory] = useState(null)
+  const [categoryID, setCategoryID] = useState(0);
   const [loadning, setLoading] = useState(true);
 
-  // React.useEffect(() => {fetch('http://localhost:8080/api/ui/categories', {method: 'GET'}).then(res => res.json()).then(res =>  setCategories(res)) }, []);
+
   React.useEffect(() =>{
     const fetchCategories = async () => {
       try {
@@ -70,6 +88,37 @@ const UIjs = () => {
       children: categories.map((category) => ({key : category.ID, label: category.category_name, }))
     };
   });
+
+
+  const handleMenuItemClick = (key) => {
+    setActiveCategory(key);
+  };
+
+
+  const items3 = [ShoppingOutlined].map((icon, index) => {
+    const key = String(index + 1);
+    return {
+      key: `sub${key}`,
+      icon: React.createElement(icon),
+      label: `subnav ${key}`,
+      children: new Array(4).fill(null).map((_, j) => {
+        const subKey = index * 4 + j + 1;
+        return {
+          key: subKey,
+          label: `option${subKey}`,
+          onclick: () => handleMenuItemClick(subKey),
+        };
+      }),
+    };
+  });
+
+
+
+
+
+
+  // React.useEffect(() => {fetch('http://localhost:8080/api/ui/categories', {method: 'GET'}).then(res => res.json()).then(res =>  setCategories(res)) }, []);
+  
 
 
   return (
@@ -124,7 +173,7 @@ const UIjs = () => {
               background: colorBgContainer,
             }}
           >
-            <ProductTable />
+            <ProductTable categoryID={setActiveCategory} />
           </Content>
         </Layout>
       </Layout>

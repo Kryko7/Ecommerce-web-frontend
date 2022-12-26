@@ -12,6 +12,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -29,13 +31,30 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
+  const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    axios.post('http://localhost:8080/api/auth/signup', {
       email: data.get('email'),
       password: data.get('password'),
-    });
+      firstName: data.get('firstName'),
+      lastName: data.get('lastName'),
+      laneAddress: data.get('laneAddress'),
+      city: data.get('city'),
+      telephoneNumber: data.get('telephoneNumber'),
+    })
+    .then((response) => {
+      console.log(response.data);
+      navigate('/');
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+    // console.log({
+    //   email: data.get('email'),
+    //   password: data.get('password'),
+    // });
   };
 
   return (
@@ -104,11 +123,22 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  name="Address"
-                  label="Address"
+                  name="Lane Address"
+                  label="Lane Address"
                   type="Address"
-                  id="address"
+                  id="laneAddress"
                   autoComplete="address"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="City"
+                  label="City"
+                  type="city"
+                  id="city"
+                  autoComplete="city"
                 />
               </Grid>
               <Grid item xs={12}>
