@@ -2,14 +2,12 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { Table } from 'antd';
 import axios from 'axios';
-// import {cartHandler} from '../sillyfunctions/cartHandler';
-import Cart2 from '../models/dummyCart2';
 import {cartHandler} from '../sillyfunctions/cartHandler';
+import cartHelper from '../sillyfunctions/cartHelper';
 
 
-const handleAddToCart = (record) => {
-  cartHandler.addToCart(record);
-};
+const {addToCart } = cartHelper;
+
 
 const columns = [
   
@@ -43,7 +41,7 @@ const columns = [
     fixed: 'right',
     width: 150,
     render: (text, record) => (
-    <a onClick={() => handleAddToCart({name: 'product_id', price: 'price'})}>Add</a>
+    <a onClick={() => addToCart({name: '123', price: 1, quantity: 1})}>Add</a>
     ),
   },
 ];
@@ -74,7 +72,7 @@ const ProductTable = ({categoryID}) => {
     // fetch("http://localhost:8080/api/ui/0", {method: 'GET'}).then(res => res.json()).then(res =>  setProducts(res)) }, []);
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/ui/${categoryID}');
+        const response = await axios.get('http://localhost:8080/api/ui/0');
         setProducts(response.data);
       } catch (e) {
         console.log(e);
