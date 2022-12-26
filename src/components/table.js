@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { Table } from 'antd';
+import axios from 'axios';
+
 const columns = [
   {
     title: 'index',
@@ -58,7 +60,17 @@ const ProductTable = () => {
 
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    fetch('http://localhost:8080/api/products', {method: 'GET'}).then(res => res.json()).then(res =>  setProducts(res)) }, []);
+    // fetch("http://localhost:8080/api/ui/0", {method: 'GET'}).then(res => res.json()).then(res =>  setProducts(res)) }, []);
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/api/ui/${index}');
+        setProducts(response.data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchProducts();
+  }, []);
     return (
   <Table
     columns={columns}

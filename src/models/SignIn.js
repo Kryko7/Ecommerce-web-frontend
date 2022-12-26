@@ -13,13 +13,15 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" >  {/* href="https://localhost:3000"> */}
-        Your Website
+      <Link color="inherit" href="http://localhost:3000">
+        Home Page
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -30,6 +32,7 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
+  const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -37,6 +40,19 @@ export default function SignIn() {
       email: data.get('email'),
       password: data.get('password'),
     });
+    axios.post('http://localhost:8080/api/auth/signin', {
+      email: data.get('email'),
+      password: data.get('password'),
+    })
+    .then((response) => {
+      // handle resposnse data
+      console.log(response.data);
+      navigate('/');
+    })
+    .catch((error) => {
+      // handle error
+      console.log(error);
+    })
   };
 
   return (

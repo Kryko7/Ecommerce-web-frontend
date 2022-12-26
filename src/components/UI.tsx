@@ -23,7 +23,6 @@ const UI: React.FC = () => {
     const [loading, setLoading] = useState(true)
 
     React.useEffect(() => { fetch("http://localhost:8080/categories", { method: "GET" }).then(res => res.json()).then(res => setCategories(res)) }, [])
-
     const {
         token: { colorBgContainer }
     } = theme.useToken();

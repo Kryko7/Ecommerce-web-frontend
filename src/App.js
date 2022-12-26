@@ -4,6 +4,7 @@ import { Layout } from 'antd';
 import SignIn from './models/SignIn';
 import SignUp from './models/SignUp';
 import UIjs from './components/UIjs';
+import CartPage from './components/cart';
 
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<UIjs />} />
         <Route path="/SignIn" element={<SignIn />} />
         <Route path="/SignUp" element={<SignUp />} />
+        <Route path="/cart" element={<CartPage />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Layout>

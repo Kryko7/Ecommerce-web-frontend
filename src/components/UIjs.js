@@ -5,8 +5,13 @@ import { MenuProps } from "antd";
 import { useState } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import ProductTable from './table';
+import axios from 'axios';
 
 const { Header, Content, Sider } = Layout;
+
+// const axiosInstance = axios.create({
+//   baseURL: 'http://localhost:8080',
+// })
 
 
 const items1 = ['SignIn', 'SignUp', 'Cart', 'Reports'].map((key) => ({
@@ -36,7 +41,18 @@ const UIjs = () => {
   const [categories, setCategories] = useState([]);
   const [loadning, setLoading] = useState(true);
 
-  React.useEffect(() => {fetch('http://localhost:8080/categories', {method: 'GET'}).then(res => res.json()).then(res =>  setCategories(res)) }, []);
+  // React.useEffect(() => {fetch('http://localhost:8080/api/ui/categories', {method: 'GET'}).then(res => res.json()).then(res =>  setCategories(res)) }, []);
+  React.useEffect(() =>{
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/api/ui/categories');
+        setCategories(response.data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchCategories();
+  }, []);
 
   const {
     token: { colorBgContainer },
