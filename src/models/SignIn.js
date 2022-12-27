@@ -15,14 +15,15 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import { Link as RouterLink } from 'react-router-dom';
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="http://localhost:3000">
+      {/* <Link color="inherit" href="http://localhost:3000">
         Home Page
-      </Link>{' '}
+      </Link> */}
+      <RouterLink to="/">Home Page</RouterLink>{' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>

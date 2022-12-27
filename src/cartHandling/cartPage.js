@@ -2,7 +2,8 @@ import React from 'react';
 import { Button, Table, Modal, message } from 'antd';
 import { useDispatch, useSelector } from 'react-redux'; 
 import { removeFromCart, clearCart, checkout } from './actions';
-
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const CartX = () => {
 
@@ -11,6 +12,21 @@ const CartX = () => {
   const cart = useSelector((state) => state.cart);
   const cartTotal = useSelector((state) => state.cartTotal);
   const cartQuantity = useSelector((state) => state.cartQuantity);
+
+  const [localCart, setLocalCart] = useState([]);
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }, [cart]);
+
+  useEffect(() => {
+    setLocalCart(cart);
+  }, [cart]);
+
+   useEffect(() => {
+        const savedCart = JSON.parse(localStorage.getItem('cart'));
+        setLocalCart(savedCart || []);
+   }, []);
+
 
   function handleCheckout() {
     dispatch(checkout());
@@ -71,12 +87,17 @@ const CartX = () => {
       <p>Total: ${cartTotal}</p>
       <Button onClick={handleCheckout}>Checkout</Button>
       <Button onClick={handleEmptyCart}>Empty Cart</Button>
+      <div style={{ float: 'right' }}>
+        <Link to="/">
+            <Button>Home</Button>
+        </Link>
+       </div>
     </div>
   );
 
   return (
     <div>
-      <Table dataSource={cart} columns={columns} footer={footer} />
+      <Table dataSource={localCart} columns={columns} footer={footer} />
     </div>
   );
 
