@@ -6,6 +6,10 @@ import { useState } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import ProductTable from './table';
 import axios from 'axios';
+import Provider from 'react-redux/es/components/Provider';
+import store from '../cartHandling/store';
+import { useSelector, useDispatch } from 'react-redux/es/hooks/useSelector';
+import { addToCart } from '../cartHandling/actions';
 
 const { Header, Content, Sider } = Layout;
 
@@ -173,7 +177,7 @@ const UIjs = () => {
               background: colorBgContainer,
             }}
           >
-            <ProductTable categoryID={setActiveCategory} />
+            <Provider store={store}> <div> <ProductTable categoryID={setActiveCategory} /> </div> </Provider> 
           </Content>
         </Layout>
       </Layout>

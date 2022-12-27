@@ -1,16 +1,28 @@
 import React from 'react';
 import { Button, Table, Modal, message } from 'antd';
-//import {cartHandler} from '../sillyfunctions/cartHandler';
-import {cartHandler} from '../sillyfunctions/cartHandler';
-import cartHelper from '../sillyfunctions/cartHelper';
+import { useDispatch, useSelector } from 'react-redux'; 
+import { removeFromCart, clearCart, checkout } from './actions';
 
-const {addToCart, removeFromCart, clearCart, handleCheckout } = cartHelper;
-const states = cartHelper.state;
-const {cart, cartTotal, cartQuantity} = states;
 
-const Cart2 = (props) => {
+const CartX = () => {
 
   // };
+  const dispatch = useDispatch();
+  const cart = useSelector((state) => state.cart);
+  const cartTotal = useSelector((state) => state.cartTotal);
+  const cartQuantity = useSelector((state) => state.cartQuantity);
+
+  function handleCheckout() {
+    dispatch(checkout());
+  }
+
+  function handleEmptyCart() {
+    dispatch(clearCart());
+  }
+
+  function handleRemoveFromCart(product) {
+    dispatch(removeFromCart(product));
+  }
 
   const dummyData = [
     {
@@ -49,17 +61,16 @@ const Cart2 = (props) => {
       title: 'Action',
       key: 'action',
       render: (text, record) => (
-        <Button onClick={() => removeFromCart(record)}>Remove</Button>
+        <Button onClick={() => handleRemoveFromCart(record)}>Remove</Button>
       ),
     },
   ];
 
   const footer = () => (
     <div>
-      <cartHelper />
       <p>Total: ${cartTotal}</p>
       <Button onClick={handleCheckout}>Checkout</Button>
-      <Button onClick={clearCart}>Empty Cart</Button>
+      <Button onClick={handleEmptyCart}>Empty Cart</Button>
     </div>
   );
 
@@ -74,7 +85,7 @@ const Cart2 = (props) => {
 
 };
 
-export default Cart2;
+export default CartX;
 
 
 
