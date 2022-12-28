@@ -3,39 +3,81 @@ import { Table, DatePicker } from 'antd';
 
 const columns = [
   {
-    title: 'Quarter',
-    dataIndex: 'quarter',
+    title: 'Product ID',
+    dataIndex: 'product_id',
   },
   {
-    title: 'Sales',
-    dataIndex: 'sales',
+    title: 'Product Name',
+    dataIndex: 'product_name',
+  },
+  {
+    title: 'Quarter 1',
+    dataIndex: 'quarter1',
+  },
+  {
+    title: 'Quarter 2',
+    dataIndex: 'quarter2',
+  },
+  {
+    title: 'Quarter 3',
+    dataIndex: 'quarter3',
+  },
+  {
+    title: 'Quarter 4',
+    dataIndex: 'quarter4',
   },
 ];
 
 const data = [
   {
-    quarter: 'Q1',
-    sales: 1000,
+    product_id: '1',
+    product_name: 'Product 1',
+    quarter1: '100',
+    quarter2: '200',
+    quarter3: '300',
+
+    quarter4: '400',
   },
   {
-    quarter: 'Q2',
-    sales: 2000,
-  },
-  {
-    quarter: 'Q3',
-    sales: 3000,
-  },
-  {
-    quarter: 'Q4',
-    sales: 4000,
+    product_id: '2',
+    product_name: 'Product 2',
+    quarter1: '100',
+    quarter2: '200',
+    quarter3: '300',
+    quarter4: '400',
   },
 ];
 
+// class SalesReport extends React.Component {
+//   render() {
+//     return (
+//       <div>
+//         <DatePicker placeholder="Select year" />
+//         <Table columns={columns} dataSource={data} />
+//       </div>
+//     );
+//   }
+// }
+
 class SalesReport extends React.Component {
+  state = {
+    selectedYear: null,
+  };
+
+  onYearChange = (date, dateString) => {
+    this.setState({ selectedYear: date });
+  };
+  // onChange={(date, dateString) => this.setState({ selectedYear: date })}
+
   render() {
     return (
       <div>
-        <DatePicker placeholder="Select year" />
+        <DatePicker
+          placeholder="Select year"
+          mode="year"
+          format="YYYY"
+          onChange={this.onYearChange}
+        />
         <Table columns={columns} dataSource={data} />
       </div>
     );

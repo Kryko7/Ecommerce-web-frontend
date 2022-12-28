@@ -16,6 +16,10 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
+import {message} from 'antd';
+import jwt from 'jsonwebtoken';
+import Cookies from 'js-cookie';
+
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -47,6 +51,13 @@ export default function SignIn() {
     })
     .then((response) => {
       // handle resposnse data
+      const { message: responseMessage , token} = response.data;
+      if (responseMessage === 'Success') {
+        Cookies.set('auth_token', token);
+        message.success('Successfully logged in');
+      } else if (responseMessage === 'Wrong email/password combination') {
+        message.error('Wrong email/password combination');
+      }
       console.log(response.data);
       navigate('/');
     })

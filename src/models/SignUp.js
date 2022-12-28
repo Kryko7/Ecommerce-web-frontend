@@ -15,6 +15,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
+import {message} from 'antd';
+
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -46,6 +48,12 @@ export default function SignUp() {
       telephoneNumber: data.get('telephoneNumber'),
     })
     .then((response) => {
+      const { message: responseMessage } = response.data;
+      if (responseMessage === 'Success') {
+      message.success('Successfully registered');
+      } else if (responseMessage === 'Email already in use') {
+      message.error('Email already in use');
+      }
       console.log(response.data);
       navigate('/');
     })
@@ -91,11 +99,11 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  name="lastName"
                   required
                   fullWidth
                   id="lastName"
                   label="Last Name"
-                  name="lastName"
                   autoComplete="family-name"
                 />
               </Grid>
@@ -124,7 +132,7 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  name="Lane Address"
+                  name="laneAddress"
                   label="Lane Address"
                   type="Address"
                   id="laneAddress"
@@ -135,7 +143,7 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  name="City"
+                  name="city"
                   label="City"
                   type="city"
                   id="city"
@@ -146,7 +154,7 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  name="Telephone Number"
+                  name="telephoneNumber"
                   label="Telephone Number"
                   type="Telephone Number"
                   id="telephoneNumber"

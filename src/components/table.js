@@ -47,18 +47,20 @@ const ProductTable = ({categoryID}) => {
     },
     {
       title: 'title',
-      width: 100,
-      dataIndex: 'prduct_id',
+      width: 200,
+      dataIndex: 'product_name',
       key: 'title',
       fixed: 'left',
     },
     {
       title: 'Availablility',
+      width: 100,
       dataIndex: 'quantity',
       key: '1',
     },
     {
       title: 'Price',
+      width: 100,
       dataIndex: 'price',
       key: '2',
     },
@@ -68,7 +70,7 @@ const ProductTable = ({categoryID}) => {
       fixed: 'right',
       width: 150,
       render: (text, record) => (
-      <a onClick={() => handleAddToCart({name: record.prduct_id, price: record.price, quantity: 1})}>Add</a>
+      <a onClick={() => handleAddToCart({name: record.product_name, price: record.price, quantity: 1})}>Add</a>
       ),
     },
   ];
