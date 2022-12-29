@@ -4,11 +4,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { removeFromCart, clearCart, checkout } from './actions';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { navigate } from '@reach/router';
+import Cookies from 'js-cookie';
 
 const CartX = () => {
 
   // };
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cart = useSelector((state) => state.cart);
   const cartTotal = useSelector((state) => state.cartTotal);
   const cartQuantity = useSelector((state) => state.cartQuantity);
@@ -29,6 +33,14 @@ const CartX = () => {
 
 
   function handleCheckout() {
+    if (cartQuantity === 0) {
+      message.warning('Your cart is empty');
+      return;
+    }
+    Cookies.set('cart', cart);
+    Cookies.set('cartTotal', cartTotal);
+    
+    navigate('/testing');
     dispatch(checkout());
   }
 

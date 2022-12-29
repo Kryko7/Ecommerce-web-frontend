@@ -8,6 +8,8 @@ import CartX from './cartHandling/cartPage';
 import { Provider } from 'react-redux/es/exports';
 import store from './cartHandling/store';
 import Dashboard from './components/ReportDashboard';
+import Checkout from './models/Checkout';
+import CheckoutPage from './models/CheckoutTest';
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/cart" element={<Provider store={store}> <div> <CartX /> </div> </Provider> } />
         <Route path="/Reports" element={<Dashboard />} />
+        <Route path="/checkout" element={ <Checkout /> } />
+        <Route path="/testing" element = { <CheckoutPage />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Layout>

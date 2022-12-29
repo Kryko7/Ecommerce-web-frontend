@@ -2,13 +2,14 @@ import React from 'react';
 import { Tabs, message } from 'antd';
 import SalesReport from './SalesReport';
 import ProductsReport from './ProductsReport';
-import ProductReportwithDate from './ProductsReport';
-import CategoriesReport from './CategoriesReport';
+// import ProductReportwithDate from './ProductsReport';
 import ProductInterestReport from './ProductInterestReport';
 import CustomerOrderReport from './CustomerReport';
+import CategoriesReport from './CategoriesReport';
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import DateForm from './ProductsReport';
 import jwt from 'jsonwebtoken';
 
 const { TabPane } = Tabs;
@@ -60,7 +61,7 @@ class Dashboard extends React.Component {
           <SalesReport />
         </TabPane>
         <TabPane tab="Products Report" key="2">
-          <ProductReportwithDate />
+          <DateForm />
         </TabPane>
         <TabPane tab="Categories Report" key="3">
           <CategoriesReport />
