@@ -32,7 +32,7 @@ const columns = [
   },
   {
     title: 'Delivery Type',
-    dataIndex: 'delivery_id',
+    dataIndex: 'delivery_method',
   },
   {
     title: 'Total',

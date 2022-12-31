@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tabs, message } from 'antd';
+import { Tabs, message, Typography } from 'antd';
 import SalesReport from './SalesReport';
 import ProductsReport from './ProductsReport';
 // import ProductReportwithDate from './ProductsReport';
@@ -13,6 +13,7 @@ import DateForm from './ProductsReport';
 import jwt from 'jsonwebtoken';
 
 const { TabPane } = Tabs;
+const { Title } = Typography;
 
 class Dashboard extends React.Component {
   state = {
@@ -56,6 +57,9 @@ class Dashboard extends React.Component {
 
     return (
     <div>
+       <Title level={2} style={{ textAlign: 'center', color: '#fff', backgroundColor: '#00bfff' }}>
+        Reports
+      </Title>
       <Tabs defaultActiveKey="1">
         <TabPane tab="Sales Report" key="1">
           <SalesReport />

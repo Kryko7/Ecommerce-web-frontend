@@ -1,7 +1,8 @@
 import React from 'react';
-import { Form, Input, Select, Table, Button } from 'antd';
+import { Form, Input, Select, Table, Button, message, Typography } from 'antd';
 import Cookies from 'js-cookie';
-
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 const columns = [
@@ -20,12 +21,39 @@ const columns = [
 ];
 
 const CheckoutPage = () => {
+  const { Title } = Typography;
   const data = [];
   const [form] = Form.useForm();
   const [userDetails, setUserDetails] = React.useState({});
+  const navigate = useNavigate();
 
-  const onFinish = (values) => {
+  const onFinish = async(values) => {
     console.log('Form values:', values);
+
+    try {
+      const data = {
+        cart: cartDetails,
+        cartTotal: cartTotal,
+        userDetails: userDetails,
+        checkoutDetails: values,
+        order_status: 'pending',
+      };
+      console.log(data);
+      const response = await axios.post('http://localhost:8080/api/order/purchase', data);
+      console.log("Order placed successfully");
+
+      // Remove the cart from cookies
+      Cookies.remove('cart');
+      Cookies.remove('cartTotal');
+      message.success('Order placed successfully');
+      navigate('/');
+    } catch (e) {
+      console.log(e);
+      console.log("Error in placing order");
+      message.error('Error in placing order');
+
+    }
+  
   };
 
   const cart = Cookies.get('cart');
@@ -66,7 +94,16 @@ const CheckoutPage = () => {
 
   return (
     <div>
+      <Title level={2} style={{ textAlign: 'center', color: '#fff', backgroundColor: '#00bfff' }}>
+        Checkout
+      </Title>
+      <Title level={4} style={{ textAlign: 'center', color: '#fff', backgroundColor: '#00bfff' }}>
+        Order Summary
+      </Title>
       <Table dataSource={data} columns={columns} />
+      <Title level={4} style={{ textAlign: 'center', color: '#fff', backgroundColor: '#00bfff' }}>
+        Delivery Details
+      </Title>
       <p>Total: {cartTotal}</p>
       <Form form={form} onFinish={onFinish}>
         <Form.Item

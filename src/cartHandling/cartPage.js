@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Table, Modal, message } from 'antd';
+import { Button, Table, Modal, message, Typography } from 'antd';
 import { useDispatch, useSelector } from 'react-redux'; 
 import { removeFromCart, clearCart, checkout } from './actions';
 import { useEffect, useState } from 'react';
@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { navigate } from '@reach/router';
 import Cookies from 'js-cookie';
+
+const { Title } = Typography;
 
 const CartX = () => {
 
@@ -92,6 +94,9 @@ const CartX = () => {
 
   return (
     <div>
+      <Title level={2} style={{ textAlign: 'center', color: '#fff', backgroundColor: '#00bfff' }}>
+        Cart
+      </Title>
       <Table dataSource={localCart} columns={columns} footer={footer} />
     </div>
   );
