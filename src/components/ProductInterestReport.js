@@ -112,82 +112,146 @@
 
 import React from 'react';
 import { Input, Table } from 'antd';
+import axios from 'axios';
+import { useState, useEffect } from 'react';
 
 const { Search } = Input;
 
 const columns = [
   {
     title: 'Product ID',
-    dataIndex: 'productID',
+    dataIndex: 'product_item_id',
   },
   {
     title: 'Product Name',
-    dataIndex: 'productName',
+    dataIndex: 'product_name',
   },
   {
-    title: 'Period',
-    dataIndex: 'period',
+    title: 'Number of sales',
+    dataIndex: 'num_sales',
   },
   {
-    title: 'Interest',
-    dataIndex: 'interest',
+    title: 'Year',
+    dataIndex: 'year',
+  },
+  {
+    title: 'Month',
+    dataIndex: 'month',
+  },
+  {
+    Quater: 'Quater',
+    dataIndex: 'quater',
   },
 ];
 
-class ProductInterestReport extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: [],
-      searchText: '',
+
+
+// const CategoriesReport = () => {
+//   const [data, setData] = useState([]);
+
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       try {
+//         const response = await axios.get('http://localhost:8080/api/report/most-ordered-category');
+//         setData(response.data);
+//       } catch (e) {
+//         console.log(e);
+//       }
+//     };
+//     fetchData();
+//   }, []);
+
+const ProductInterestReport = () => {
+  const [data, setData] = useState([]);
+  const [searchText, setSearchText] = useState('');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/api/report/most-interest-period');
+        setData(response.data);
+      } catch (e) {
+        console.log(e);
+      }
     };
-  }
+    fetchData();
+  }, []);
 
-  componentDidMount() {
-    // Retrieve data for product sales or page views over different time periods from database or API
-    const data = [
-      {
-        productID: '1',
-        productName: 'Product 2',
-        period: 'Jan',
-        interest: 1000,
-      },
-      {
-        productID: '2',
-        productName: 'Product 2',
-        period: 'Feb',
-        interest: 2000,
-      },
-      {
-        productID: '3',
-        productName: 'Product 3',
-        period: 'Mar',
-        interest: 1500,
-      },
-    ];
 
-    this.setState({ data });
-  }
-
-  handleSearch = searchText => {
-    this.setState({ searchText });
+  const handleSearch = searchText => {
+    setSearchText(searchText);
   };
 
-  render() {
-    const { searchText, data } = this.state;
-    const filteredData = data.filter(item => item.productID.includes(searchText));
+  const filteredData = data.filter(item => String(item.product_item_id).includes(searchText));
+
 
     return (
       <div>
         <Search
           placeholder="Product ID"
-          onSearch={this.handleSearch}
+          onSearch={handleSearch}
           style={{ width: 200 }}
         />
         <Table columns={columns} dataSource={filteredData} />
       </div>
     );
-  }
 }
 
 export default ProductInterestReport;
+// class ProductInterestReport extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       data: [],
+//       searchText: '',
+//     };
+//   }
+
+//   componentDidMount() {
+//     // Retrieve data for product sales or page views over different time periods from database or API
+//     const data = [
+//       {
+//         productID: '1',
+//         productName: 'Product 2',
+//         period: 'Jan',
+//         interest: 1000,
+//       },
+//       {
+//         productID: '2',
+//         productName: 'Product 2',
+//         period: 'Feb',
+//         interest: 2000,
+//       },
+//       {
+//         productID: '3',
+//         productName: 'Product 3',
+//         period: 'Mar',
+//         interest: 1500,
+//       },
+//     ];
+
+//     this.setState({ data });
+//   }
+
+//   handleSearch = searchText => {
+//     this.setState({ searchText });
+//   };
+
+//   render() {
+//     const { searchText, data } = this.state;
+//     const filteredData = data.filter(item => item.productID.includes(searchText));
+
+//     return (
+//       <div>
+//         <Search
+//           placeholder="Product ID"
+//           onSearch={this.handleSearch}
+//           style={{ width: 200 }}
+//         />
+//         <Table columns={columns} dataSource={filteredData} />
+//       </div>
+//     );
+//   }
+// }
+
+// export default ProductInterestReport;

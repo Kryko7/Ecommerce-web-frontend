@@ -70,7 +70,7 @@ const ProductTable = ({categoryID}) => {
       fixed: 'right',
       width: 150,
       render: (text, record) => (
-      <a onClick={() => handleAddToCart({name: record.product_name, price: record.price, quantity: 1})}>Add</a>
+      <a onClick={() => handleAddToCart({product_item_id: record.product_item_id, name: record.product_name, price: record.price, quantity: 1})}>Add</a>
       ),
     },
   ];

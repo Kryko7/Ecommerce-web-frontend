@@ -1,20 +1,8 @@
 import React from 'react';
 import { Form, Input, Select, Table, Button } from 'antd';
+import Cookies from 'js-cookie';
 
-const data = [
-  {
-    key: 1,
-    name: 'Product 1',
-    price: '$10',
-    quantity: 2,
-  },
-  {
-    key: 2,
-    name: 'Product 2',
-    price: '$15',
-    quantity: 1,
-  },
-];
+
 
 const columns = [
   {
@@ -32,23 +20,60 @@ const columns = [
 ];
 
 const CheckoutPage = () => {
+  const data = [];
   const [form] = Form.useForm();
+  const [userDetails, setUserDetails] = React.useState({});
 
   const onFinish = (values) => {
     console.log('Form values:', values);
   };
 
-  const total = data.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const cart = Cookies.get('cart');
+  const cartTotal = Cookies.get('cartTotal');
+  let cartDetails;
+  try {
+    cartDetails = JSON.parse(cart);
+    console.log(cartDetails);
+    console.log(cartDetails.length);
+    for(let i = 0; i < cartDetails.length; i++) {
+      data.push({
+        name: cartDetails[i].name,
+        price: cartDetails[i].price,
+        quantity: cartDetails[i].quantity,
+      });
+    }
+  } catch (e) {
+    console.log(e);
+    cartDetails = [];
+  }
+  console.log(cartDetails);
+  // Get the user details from cookies
+  const userCookie = Cookies.get('user');
+  // Set the user details in the form
+  if (userCookie && !Object.keys(userDetails).length) {
+    try {
+      const userDetailsFromCookies = JSON.parse(userCookie);
+      setUserDetails(userDetailsFromCookies);
+      form.setFieldsValue({
+        name: userDetailsFromCookies.first_name + ' ' + userDetailsFromCookies.last_name,
+        email: userDetailsFromCookies.email_address,
+        phone: userDetailsFromCookies.phone_number,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   return (
     <div>
       <Table dataSource={data} columns={columns} />
-      <p>Total: {total}</p>
+      <p>Total: {cartTotal}</p>
       <Form form={form} onFinish={onFinish}>
         <Form.Item
           label="Name"
           name="name"
           rules={[{ required: true, message: 'Please input your name!' }]}
+          
         >
           <Input />
         </Form.Item>
@@ -73,6 +98,7 @@ const CheckoutPage = () => {
         >
           <Select>
             <Select.Option value="creditCard">Credit Card</Select.Option>
+            <Select.Option value="debitCard">Debit Card</Select.Option>
             <Select.Option value="paypal">PayPal</Select.Option>
             <Select.Option value="cash">Cash</Select.Option>
             </Select>
@@ -98,5 +124,8 @@ const CheckoutPage = () => {
 
 );
 };
+
+
+
 
 export default CheckoutPage;

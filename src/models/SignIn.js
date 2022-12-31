@@ -16,7 +16,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
-import {message} from 'antd';
+import {message, Result} from 'antd';
 import jwt from 'jsonwebtoken';
 import Cookies from 'js-cookie';
 
@@ -51,9 +51,10 @@ export default function SignIn() {
     })
     .then((response) => {
       // handle resposnse data
-      const { message: responseMessage , token} = response.data;
+      const { message: responseMessage , token, result : userDetails} = response.data;
       if (responseMessage === 'Success') {
         Cookies.set('auth_token', token);
+        Cookies.set('user', JSON.stringify(userDetails[0]));
         message.success('Successfully logged in');
       } else if (responseMessage === 'Wrong email/password combination') {
         message.error('Wrong email/password combination');

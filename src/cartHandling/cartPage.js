@@ -37,8 +37,8 @@ const CartX = () => {
       message.warning('Your cart is empty');
       return;
     }
-    Cookies.set('cart', cart);
-    Cookies.set('cartTotal', cartTotal);
+    Cookies.set('cart', JSON.stringify(cart));
+    Cookies.set('cartTotal', JSON.stringify(cartTotal));
     
     navigate('/testing');
     dispatch(checkout());
@@ -52,23 +52,6 @@ const CartX = () => {
     dispatch(removeFromCart(product));
   }
 
-  const dummyData = [
-    {
-      'name': 'Apple',
-      'price': 1.99,
-      'quantity': 1,
-    },
-    {
-      'name': 'Banana',
-      'price': 2.99,
-      'quantity': 1,
-    },
-    {
-      'name': 'Orange',
-      'price': 3.99,
-      'quantity': 1,
-    },
-  ];
   const columns = [
     {
       title: 'Name',
