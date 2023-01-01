@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { navigate } from '@reach/router';
 import Cookies from 'js-cookie';
+import axios from 'axios';
 
 const { Title } = Typography;
 
@@ -34,13 +35,30 @@ const CartX = () => {
    }, []);
 
 
-  function handleCheckout() {
+  async function handleCheckout() {
     if (cartQuantity === 0) {
       message.warning('Your cart is empty');
       return;
     }
     Cookies.set('cart', JSON.stringify(cart));
     Cookies.set('cartTotal', JSON.stringify(cartTotal));
+    try {
+      const data = {
+        cart: cart,
+      }
+      const response = await axios.post('http://localhost:8080/api/delivery/stock-check', cart);
+      
+      if (response.data.inStock === true) {
+        Cookies.set('inStock', true);
+      }
+      else {
+        Cookies.set('inStock', false);
+      }
+    }
+    catch (e) {
+      console.log(e);
+      console.log("Error in stock check");
+    }
     
     navigate('/testing');
     dispatch(checkout());
@@ -108,38 +126,3 @@ const CartX = () => {
 
 export default CartX;
 
-
-
-  // const [cart, setCart] = useState([]);
-  // const [total, setTotal] = useState(0);
-  // const [quantity, setQuantity] = useState(0);
-
-  // const addToCart = (item) => {
-  //   setCart([...cart, item]);
-  //   setTotal(total + item.price);
-  //   setQuantity(quantity + 1);
-  // };
-
-  // const removeFromCart = (item) => {
-  //   setCart(cart.filter((i) => i.id !== item.id));
-  //   setTotal(total - item.price);
-  //   setQuantity(quantity - 1);
-  // };
-
-  // const handleCheckout = () => {
-  //   if (cart.length === 0) {
-  //     message.warning('Your cart is empty');
-  //     return;
-  //   }
-
-  //   // Implement the checkout process here, e.g. send a request to the server to process the payment
-
-  //   setCart([]);
-  //   setTotal(0);
-  //   message.success('Checkout successful');
-  // };
-
-  // const handleEmptyCart = () => {
-  //   setCart([]);
-  //   setTotal(0);
-  //   message.warning('Your cart is now empty');

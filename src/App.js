@@ -13,6 +13,7 @@ import CheckoutPage from './models/CheckoutTest';
 import FrontPage from './models/UI';
 import SignIn from './models/SignInAntd';
 import SignUp from './models/SignUpAntd';
+import DeliveryForm from './models/CheckoutForm';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/checkout" element={ <Checkout /> } />
         <Route path="/testing" element = { <CheckoutPage />} />
         <Route path="/" element = {<Provider store={store}> <div> <FrontPage /> </div> </Provider> } />
+        <Route path="/delivery" element = { <DeliveryForm /> } />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Layout>

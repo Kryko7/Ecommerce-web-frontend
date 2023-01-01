@@ -56,6 +56,12 @@ const SignIn = () => {
           Sign In
         </Button>
       </Form.Item>
+      <p>
+        Don't have an account? <a onClick={() => navigate('/SignUp')}>Sign Up</a>
+      </p>
+      <p>
+        Back to <a onClick={() => navigate('/')}>Home</a>
+      </p>
     </Form>
   );
 };

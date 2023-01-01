@@ -58,6 +58,11 @@ const CheckoutPage = () => {
 
   const cart = Cookies.get('cart');
   const cartTotal = Cookies.get('cartTotal');
+  const checkoutDetails = Cookies.get('checkoutDetails');
+  const deliveryDelay = Cookies.get('deliveryDelay');
+  console.log(checkoutDetails);
+  console.log(deliveryDelay);
+
   let cartDetails;
   try {
     cartDetails = JSON.parse(cart);
@@ -101,10 +106,11 @@ const CheckoutPage = () => {
         Order Summary
       </Title>
       <Table dataSource={data} columns={columns} />
+      <p>Total: {cartTotal}</p>
       <Title level={4} style={{ textAlign: 'center', color: '#fff', backgroundColor: '#00bfff' }}>
         Delivery Details
       </Title>
-      <p>Total: {cartTotal}</p>
+      
       <Form form={form} onFinish={onFinish}>
         <Form.Item
           label="Name"

@@ -1,9 +1,9 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { Button, Layout, Menu, Table, Typography } from 'antd';
+import { Button, Layout, Menu, message, Table, Typography } from 'antd';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-
+import Cookies from 'js-cookie';
 import { useSelector } from 'react-redux/es/exports';
 import { useDispatch } from 'react-redux/es/exports';
 import { addToCart } from '../cartHandling/actions';
@@ -13,10 +13,9 @@ const { Title } = Typography;
 
 
 const FrontPage = ({categoryID}) => {
-    const [products, setProducts] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
-    //const [searchText, setSearchText] = useState('');
     const [categories, setCategories] = useState([]);
+    const [filteredData, setFilteredData] = useState([]);
 
 
     const cart = useSelector(state => state.cart);
@@ -71,6 +70,19 @@ const FrontPage = ({categoryID}) => {
           ),
         },
       ];  
+    
+    const getFilteredData = async () => {
+        try {
+            const response = await axios.get('http://localhost:8080/api/ui/' + categoryID);
+            setFilteredData(response.data);
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+    useEffect(() => {
+        getFilteredData();
+    }, [categoryID]);
 
     useEffect(() =>{
         const fetchCategories = async () => {
@@ -85,11 +97,10 @@ const FrontPage = ({categoryID}) => {
       }, []);
 
       useEffect(() => {
-        // fetch("http://localhost:8080/api/ui/0", {method: 'GET'}).then(res => res.json()).then(res =>  setProducts(res)) }, []);
         const fetchProducts = async () => {
           try {
             const response = await axios.get('http://localhost:8080/api/ui/0');
-            setProducts(response.data);
+            setFilteredData(response.data);
           } catch (e) {
             console.log(e);
           }
@@ -97,21 +108,39 @@ const FrontPage = ({categoryID}) => {
         fetchProducts();
       }, [categoryID]);
 
-    const handleMenuClick = (event) => {
+    const handleMenuClick = async(event) => {
         if (event.key === 'Show All') {
             setSelectedCategory(null);
         }
         else {
             setSelectedCategory(event.key);
         }
+
+        try {
+            const response = await axios.get('http://localhost:8080/api/ui/' + event.key);
+            setFilteredData(response.data);
+        } catch (e) {
+            console.log(e);
+        }
+
     };
 
-    const filteredData = products.filter((product) => {
-        if (!selectedCategory) {
-            return true;
-        }
-        return product.category === selectedCategory;
-    });
+
+    const handleSignOut = async() => {
+        try {
+            const response = await axios.get('http://localhost:8080/api/auth/signout');
+            if (response.data.message === 'Success') {
+                message.success('Sign out successfully');
+                Cookies.remove('user');
+                Cookies.remove('token');
+            }
+            else if (response.data.message === 'No session') {
+                message.error('You are not signed in');
+            } 
+          }catch (e) {
+                message.error('Sign out failed');
+            }
+    };
 
     return (
         <>
@@ -132,14 +161,12 @@ const FrontPage = ({categoryID}) => {
             <Link to="/Reports">
                 <Button>Reports</Button>
             </Link>
+            <Button onClick={handleSignOut}>Sign Out</Button>
         </Header>
         <Layout>
             <Sider>
             <Menu onClick={handleMenuClick}>
-                <Menu.Item key="Show All">Show All</Menu.Item>
-                {/* <Menu.Item key="Category 1">Category 1</Menu.Item>
-                <Menu.Item key="Category 2">Category 2</Menu.Item>
-                <Menu.Item key="Category 3">Category 3</Menu.Item> */}
+                <Menu.Item key={0}>Show All</Menu.Item>
                 {categories.map((category) => (
                     <Menu.Item key={category.ID}>{category.category_name}</Menu.Item>
                 ))}
@@ -154,9 +181,6 @@ const FrontPage = ({categoryID}) => {
     );
 };
 
-
-// columns={columns}
-//     dataSource={products}
 
 export default FrontPage;
 
