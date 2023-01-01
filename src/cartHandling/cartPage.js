@@ -60,7 +60,7 @@ const CartX = () => {
       console.log("Error in stock check");
     }
     
-    navigate('/testing');
+    navigate('/delivery');
     dispatch(checkout());
   }
 

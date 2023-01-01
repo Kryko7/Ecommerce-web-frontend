@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Select, Table, Button, message, Typography } from 'antd';
+import { Form, Input, Select, Table, Button, message, Typography, Descriptions } from 'antd';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -35,8 +35,8 @@ const CheckoutPage = () => {
         cart: cartDetails,
         cartTotal: cartTotal,
         userDetails: userDetails,
-        checkoutDetails: values,
-        order_status: 'pending',
+        checkoutDetails: checkoutDetails,
+        order_status: orderStatus,
       };
       console.log(data);
       const response = await axios.post('http://localhost:8080/api/order/purchase', data);
@@ -58,10 +58,15 @@ const CheckoutPage = () => {
 
   const cart = Cookies.get('cart');
   const cartTotal = Cookies.get('cartTotal');
-  const checkoutDetails = Cookies.get('checkoutDetails');
+  const cDetails = Cookies.get('checkoutDetails');
+  const checkoutDetails = JSON.parse(cDetails);
   const deliveryDelay = Cookies.get('deliveryDelay');
+  const inStock = Cookies.get('inStock');
+  const mainCity = Cookies.get('mainCity');
+  const orderStatus = Cookies.get('orderStatus');
+  console.log("LOL");
   console.log(checkoutDetails);
-  console.log(deliveryDelay);
+  console.log("LOL");
 
   let cartDetails;
   try {
@@ -111,7 +116,7 @@ const CheckoutPage = () => {
         Delivery Details
       </Title>
       
-      <Form form={form} onFinish={onFinish}>
+      {/* <Form form={form} onFinish={onFinish}>
         <Form.Item
           label="Name"
           name="name"
@@ -162,7 +167,25 @@ const CheckoutPage = () => {
           Checkout
         </Button>
       </Form.Item>
-    </Form>
+    </Form> */}
+    <Title level={4}>Order Details</Title>
+      <Descriptions>
+        <Descriptions.Item label="Name">{checkoutDetails.firstName + ' ' + checkoutDetails.lastName}</Descriptions.Item>
+        <Descriptions.Item label="Email">{checkoutDetails.email}</Descriptions.Item>
+        <Descriptions.Item label="Phone">{checkoutDetails.phone}</Descriptions.Item>
+        <Descriptions.Item label="Payment Method">{checkoutDetails.paymentMethod}</Descriptions.Item>
+        <Descriptions.Item label="Delivery Method">{checkoutDetails.deliveryMethod}</Descriptions.Item>
+        <Descriptions.Item label="Expected Delivery Time">{deliveryDelay + " Days"} </Descriptions.Item>
+        <Descriptions.Item label="Address">{checkoutDetails.laneAddress}</Descriptions.Item>
+        <Descriptions.Item label="City">{checkoutDetails.city}</Descriptions.Item>
+      </Descriptions>
+      <Form form={form} onFinish={onFinish}>
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Place Order
+          </Button>
+        </Form.Item>
+      </Form>
   </div>
 
 );

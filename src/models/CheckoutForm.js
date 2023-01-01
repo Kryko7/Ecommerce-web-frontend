@@ -11,44 +11,96 @@ const DeliveryForm = () => {
   const navigate = useNavigate();
   const { Title } = Typography;
 
-  const onFinish = async(values) => {
-    console.log('Success:', values);
-    Cookies.set('chekoutDetails', values);
-    console.log(values.city);
-    try{
-        const data = {
-            city: values.city,
-        }
-        console.log(data);
-        const response = await axios.post('http://localhost:8080/api/delivery/town', data);
+  // const onFinish = (values) => {
+  //   console.log('Success:', values);
+  //   Cookies.set('chekoutDetails', values);
+  //   try{
+  //       const data = {
+  //           city: values.city,
+  //       }
+  //       console.log(data);
+  //       axios.post('http://localhost:8080/api/delivery/town', data)
+  //       .then(response => {
         
-        if (response.data === true){
-            Cookies.set('mainCity', true);
-        }
-        else{
-            Cookies.set('mainCity', false);
-        }
-    }
-    catch(e){
-        console.log(e);
-    }
+  //       if (response.data === true){
+  //           Cookies.set('mainCity', true);
+  //       }
+  //       else{
+  //           Cookies.set('mainCity', false);
+  //       }
+  //       const deliveryData = {
+  //           mainCity: Cookies.get('mainCity'),
+  //           inStock: Cookies.get('inStock'),
+  //       };
+  //       try {
+  //           axios.post('http://localhost:8080/api/delivery/delay', deliveryData)
+  //           .then(response => {
+  //                 const deliveryDelay = response.data.deliveryDelay;
+  //                 Cookies.set('deliveryDelay', JSON.stringify(deliveryDelay));
+  //             } catch (e) {
+  //                 console.log(e);
+  //             }
+  //           )
+ 
+  //   // catch(e){
+  //   //     console.log(e);
+  //   // }
 
-    const deliveryData = {
-        mainCity: Cookies.get('mainCity'),
-        inStock: Cookies.get('inStock'),
-    }
-    try {
-        console.log(deliveryData.mainCity);
-        console.log(deliveryData.inStock);
-        const response = await axios.post('http://localhost:8080/api/delivery/delay', deliveryData);
-        const deliveryDelay = response.data.deliveryDelay;
-        Cookies.set('deliveryDelay', JSON.stringify(deliveryDelay));
-    }
-    catch(e){
-        console.log(e);
-    }
+  //   // const deliveryData = {
+  //   //     mainCity: Cookies.get('mainCity'),
+  //   //     inStock: Cookies.get('inStock'),
+  //   // }
+  //   // try {
+  //   //   const response = axios.post('http://localhost:8080/api/delivery/delay', deliveryData);
+  //   //   const deliveryDelay = response.data.deliveryDelay;
+  //   //   Cookies.set('deliveryDelay', JSON.stringify(deliveryDelay));
+  //   // } catch (e) {
+  //   //   console.log(e);
+  //   // }
     
-    navigate('/testing');
+    
+  // };
+  const onFinish = (values) => {
+    console.log('Success:', values);
+    Cookies.set('checkoutDetails', JSON.stringify(values));
+    try {
+      const data = {
+        city: values.city,
+      };
+      console.log(data);
+      axios.post('http://localhost:8080/api/delivery/town', data)
+        .then(response => {
+          if (response.data === true) {
+            Cookies.set('mainCity', true);
+          } else {
+            Cookies.set('mainCity', false);
+          }
+          const deliveryData = {
+            mainCity: Cookies.get('mainCity'),
+            inStock: Cookies.get('inStock'),
+          };
+          try {
+            axios.post('http://localhost:8080/api/delivery/delay', deliveryData)
+              .then(response => {
+                const deliveryDelay = response.data.deliveryDelay;
+                const orderStatus = response.data.orderStatus;
+                Cookies.set('deliveryDelay', JSON.stringify(deliveryDelay));
+                Cookies.set('orderStatus', JSON.stringify(orderStatus));
+                navigate('/testing');
+              })
+              .catch(error => {
+                console.log(error);
+              });
+          } catch (e) {
+            console.log(e);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
