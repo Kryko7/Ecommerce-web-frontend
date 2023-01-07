@@ -5,7 +5,6 @@ import { removeFromCart, clearCart, checkout } from './actions';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { navigate } from '@reach/router';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 

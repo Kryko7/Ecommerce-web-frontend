@@ -116,58 +116,6 @@ const CheckoutPage = () => {
         Delivery Details
       </Title>
       
-      {/* <Form form={form} onFinish={onFinish}>
-        <Form.Item
-          label="Name"
-          name="name"
-          rules={[{ required: true, message: 'Please input your name!' }]}
-          
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          label="Email"
-          name="email"
-          rules={[{ required: true, message: 'Please input your email!' }]}
-        >
-          <Input type="email" />
-        </Form.Item>
-        <Form.Item
-          label="Phone"
-          name="phone"
-          rules={[{ required: true, message: 'Please input your phone number!' }]}
-        >
-          <Input type="tel" />
-        </Form.Item>
-        <Form.Item
-          label="Payment Method"
-          name="paymentMethod"
-          rules={[{ required: true, message: 'Please select a payment method!' }]}
-        >
-          <Select>
-            <Select.Option value="creditCard">Credit Card</Select.Option>
-            <Select.Option value="debitCard">Debit Card</Select.Option>
-            <Select.Option value="paypal">PayPal</Select.Option>
-            <Select.Option value="cash">Cash</Select.Option>
-            </Select>
-        </Form.Item>
-
-        <Form.Item
-            label="Delivery Method"
-            name="deliveryMethod"
-            rules={[{ required: true, message: 'Please select a delivery method!' }]}
-        >
-        <Select>
-          <Select.Option value="standard">Standard</Select.Option>
-          <Select.Option value="express">Express</Select.Option>
-        </Select>
-      </Form.Item>
-      <Form.Item>
-        <Button type="primary" htmlType="submit">
-          Checkout
-        </Button>
-      </Form.Item>
-    </Form> */}
     <Title level={4}>Order Details</Title>
       <Descriptions>
         <Descriptions.Item label="Name">{checkoutDetails.firstName + ' ' + checkoutDetails.lastName}</Descriptions.Item>

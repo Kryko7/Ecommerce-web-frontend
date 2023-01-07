@@ -11,55 +11,7 @@ const DeliveryForm = () => {
   const navigate = useNavigate();
   const { Title } = Typography;
 
-  // const onFinish = (values) => {
-  //   console.log('Success:', values);
-  //   Cookies.set('chekoutDetails', values);
-  //   try{
-  //       const data = {
-  //           city: values.city,
-  //       }
-  //       console.log(data);
-  //       axios.post('http://localhost:8080/api/delivery/town', data)
-  //       .then(response => {
-        
-  //       if (response.data === true){
-  //           Cookies.set('mainCity', true);
-  //       }
-  //       else{
-  //           Cookies.set('mainCity', false);
-  //       }
-  //       const deliveryData = {
-  //           mainCity: Cookies.get('mainCity'),
-  //           inStock: Cookies.get('inStock'),
-  //       };
-  //       try {
-  //           axios.post('http://localhost:8080/api/delivery/delay', deliveryData)
-  //           .then(response => {
-  //                 const deliveryDelay = response.data.deliveryDelay;
-  //                 Cookies.set('deliveryDelay', JSON.stringify(deliveryDelay));
-  //             } catch (e) {
-  //                 console.log(e);
-  //             }
-  //           )
- 
-  //   // catch(e){
-  //   //     console.log(e);
-  //   // }
 
-  //   // const deliveryData = {
-  //   //     mainCity: Cookies.get('mainCity'),
-  //   //     inStock: Cookies.get('inStock'),
-  //   // }
-  //   // try {
-  //   //   const response = axios.post('http://localhost:8080/api/delivery/delay', deliveryData);
-  //   //   const deliveryDelay = response.data.deliveryDelay;
-  //   //   Cookies.set('deliveryDelay', JSON.stringify(deliveryDelay));
-  //   // } catch (e) {
-  //   //   console.log(e);
-  //   // }
-    
-    
-  // };
   const onFinish = (values) => {
     console.log('Success:', values);
     Cookies.set('checkoutDetails', JSON.stringify(values));

@@ -40,49 +40,6 @@ const columns = [
   },
 ];
 
-// class CustomerOrderReport extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       data: [],
-//     };
-//   }
-
-//   componentDidMount() {
-//     // Retrieve customer and order data from database or API
-//     const data = [
-//       {
-//         customer: 'John Smith',
-//         orderId: '12345',
-//         date: '01/01/2022',
-//         total: 100,
-//       },
-//       {
-//         customer: 'Jane Doe',
-//         orderId: '23456',
-//         date: '02/01/2022',
-//         total: 200,
-//       },
-//       {
-//         customer: 'Bob Johnson',
-//         orderId: '34567',
-//         date: '03/01/2022',
-//         total: 150,
-//       },
-//     ];
-
-//     this.setState({ data });
-//   }
-
-//   render() {
-//     return (
-//       <Table columns={columns} dataSource={this.state.data} />
-//     );
-//   }
-// }
-
-// export default CustomerOrderReport;
-
 
 const CustomerOrderReport = () => {
   const [data, setData] = useState([]);
@@ -120,6 +77,3 @@ const CustomerOrderReport = () => {
 
 export default CustomerOrderReport;
 
-
-
- //const filteredData = data.filter((item) => {String(item.customerId).includes(searchText)});

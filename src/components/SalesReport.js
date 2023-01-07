@@ -56,7 +56,6 @@ class SalesReport extends React.Component {
       console.log(error);
     } 
   };
-  // onChange={(date, dateString) => this.setState({ selectedYear: date })}
 
 
   render() {
@@ -79,34 +78,3 @@ export default SalesReport;
 
 
 
-
-// const data = [
-//   {
-//     product_id: '1',
-//     product_name: 'Product 1',
-//     quarter1: '100',
-//     quarter2: '200',
-//     quarter3: '300',
-
-//     quarter4: '400',
-//   },
-//   {
-//     product_id: '2',
-//     product_name: 'Product 2',
-//     quarter1: '100',
-//     quarter2: '200',
-//     quarter3: '300',
-//     quarter4: '400',
-//   },
-// ];
-
-// class SalesReport extends React.Component {
-//   render() {
-//     return (
-//       <div>
-//         <DatePicker placeholder="Select year" />
-//         <Table columns={columns} dataSource={data} />
-//       </div>
-//     );
-//   }
-// }

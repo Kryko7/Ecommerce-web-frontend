@@ -1,8 +1,5 @@
 import { ADD_TO_CART, REMOVE_FROM_CART, CLEAR_CART, CHECKOUT } from "./actions";    
 import { message } from "antd";
-//import { useNavigate } from "@reach/router";
-import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 
 const initialState = {
     cart: [],
@@ -12,20 +9,6 @@ const initialState = {
 
 const cartReducer = (state = initialState, action) => {
     switch (action.type) {
-        // case ADD_TO_CART:
-        //     return {
-        //         ...state,
-        //         cart: [...state.cart, action.product],
-        //         cartTotal: state.cartTotal + action.product.price,
-        //         cartQuantity: state.cartQuantity + 1,
-        //     };
-        // case REMOVE_FROM_CART:
-        //     return {
-        //         ...state,
-        //         cart: state.cart.filter((item) => item.name !== action.product.name),
-        //         cartTotal: state.cartTotal - action.product.price,
-        //         cartQuantity: state.cartQuantity - 1,
-        //     };
         case ADD_TO_CART:
         // Find the product in the cart
             const addProductIndex = state.cart.findIndex(
