@@ -7,6 +7,7 @@ import Cookies from 'js-cookie';
 import { useSelector } from 'react-redux/es/exports';
 import { useDispatch } from 'react-redux/es/exports';
 import { addToCart } from '../cartHandling/actions';
+import { useNavigate } from 'react-router-dom';
 
 const { Header, Sider, Content } = Layout;
 const { Title } = Typography;
@@ -16,7 +17,7 @@ const FrontPage = ({categoryID}) => {
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [categories, setCategories] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
-
+    const navigate = useNavigate();
 
     const cart = useSelector(state => state.cart);
     const dispatch = useDispatch();
@@ -66,7 +67,34 @@ const FrontPage = ({categoryID}) => {
           fixed: 'right',
           width: 150,
           render: (text, record) => (
-          <a onClick={() => handleAddToCart({product_item_id: record.product_item_id, name: record.product_name, price: record.price, quantity: 1})}>Add</a>
+            Cookies.get('user') != null ? 
+              <a onClick={() => handleAddToCart({product_item_id: record.product_item_id, name: record.product_name, price: record.price, quantity: 1})}>Add</a>
+            
+            :
+              <a onClick= {() => message.error('Please login to add to cart')}>Add</a>
+            
+          // <a onClick={() => 
+          //   if(Cookies.get('user') != null) {
+          //     handleAddToCart({product_item_id: record.product_item_id, name: record.product_name, price: record.price, quantity: 1})}>Add</a>
+          //   }
+          //   else {
+
+          // <a onClick={() => {
+          //   handleAddToCart({product_item_id: record.product_item_id, name: record.product_name, price: record.price, quantity: 1});
+          //   // if(Cookies.get('temp_cart_item') != null) {
+          //   //   Cookies.remove('temp_cart_item');
+          //   // }
+          //   // const cookieValue = {
+          //   //   product_item_id: record.product_item_id,
+          //   //   name: record.product_name,
+          //   //   price: record.price,
+          //   //   quantity: 1,
+          //   //   category_id: record.category_id
+          //   // };
+          //   Cookies.set('temp_cart_item', JSON.stringify(cookieValue));
+          //   //Cookies.set('temp_cart_item', {product_item_id: record.product_item_id, name: record.product_name, price: record.price, quantity: 1, category_id: record.category_id});
+          //   // navigate('/view');
+          // }}>Add</a>
           ),
         },
       ];  
@@ -132,9 +160,13 @@ const FrontPage = ({categoryID}) => {
             if (response.data.message === 'Success') {
                 message.success('Sign out successfully');
                 Cookies.remove('user');
+                Cookies.remove('auth_token');
                 Cookies.remove('token');
+                
             }
             else if (response.data.message === 'No session') {
+                Cookies.remove('user');
+                Cookies.remove('auth_token');
                 message.error('You are not signed in');
             } 
           }catch (e) {

@@ -20,6 +20,7 @@ class Dashboard extends React.Component {
 
   componentDidMount() {
     const token = Cookies.get('auth_token');
+    console.log(token);
     if (!token) {
       return;
     }

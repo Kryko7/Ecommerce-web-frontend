@@ -45,6 +45,11 @@ const CheckoutPage = () => {
       // Remove the cart from cookies
       Cookies.remove('cart');
       Cookies.remove('cartTotal');
+      Cookies.remove('checkoutDetails');
+      Cookies.remove('deliveryDelay');
+      Cookies.remove('inStock');
+      Cookies.remove('mainCity');
+      Cookies.remove('orderStatus');
       message.success('Order placed successfully');
       navigate('/');
     } catch (e) {
@@ -63,7 +68,7 @@ const CheckoutPage = () => {
   const deliveryDelay = Cookies.get('deliveryDelay');
   const inStock = Cookies.get('inStock');
   const mainCity = Cookies.get('mainCity');
-  const orderStatus = Cookies.get('orderStatus');
+  const orderStatus = JSON.parse(Cookies.get('orderStatus'));
   console.log("LOL");
   console.log(checkoutDetails);
   console.log("LOL");
