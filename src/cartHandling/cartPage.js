@@ -98,7 +98,7 @@ const CartX = () => {
 
   const footer = () => (
     <div>
-      <p>Total: ${cartTotal}</p>
+      <p>Total: Rs: {cartTotal}</p>
       <Button onClick={handleCheckout}>Checkout</Button>
       <Button onClick={handleEmptyCart}>Empty Cart</Button>
       <div style={{ float: 'right' }}>
