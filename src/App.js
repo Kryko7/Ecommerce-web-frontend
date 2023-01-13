@@ -12,7 +12,7 @@ import SignIn from './models/SignInAntd';
 import SignUp from './models/SignUpAntd';
 import DeliveryForm from './models/CheckoutForm';
 // import VA from './models/ProductView';
-
+//http://locaasdasd.dasd/SingnIN
 function App() {
   return (
     <Layout>

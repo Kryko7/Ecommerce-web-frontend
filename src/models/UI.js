@@ -29,18 +29,22 @@ const FrontPage = ({categoryID}) => {
     const columns = [
   
         {
-          title: 'index',
+          title: 'Product ID',
           width: 100,
           dataIndex: 'product_item_id',
           key: 'product_item_id',
           fixed: 'left',
         },
         {
-          title: 'title',
+          title: 'Name',
           width: 200,
           dataIndex: 'product_name',
           key: 'title',
           fixed: 'left',
+        },
+        {
+          title: 'Description',
+          dataIndex: 'description'
         },
         {
           title: 'Availablility',
@@ -71,7 +75,7 @@ const FrontPage = ({categoryID}) => {
               <a onClick={() => handleAddToCart({product_item_id: record.product_item_id, name: record.product_name, price: record.price, quantity: 1})}>Add</a>
             
             :
-              <a onClick= {() => message.error('Please login to add to cart')}>Add</a>
+              <a onClick= {() => message.error('Please sign in to add to cart')}>Add</a>
             
           // <a onClick={() => 
           //   if(Cookies.get('user') != null) {
@@ -157,7 +161,7 @@ const FrontPage = ({categoryID}) => {
     const handleSignOut = async() => {
         try {
             const response = await axios.get('http://localhost:8080/api/auth/signout');
-            if (response.data.message === 'Success') {
+            if (response.data.message === 'Success' && Cookies.get('user') != null) {
                 message.success('Sign out successfully');
                 Cookies.remove('user');
                 Cookies.remove('auth_token');
@@ -169,6 +173,9 @@ const FrontPage = ({categoryID}) => {
                 Cookies.remove('auth_token');
                 message.error('You are not signed in');
             } 
+            else {
+                message.error('You are not signed in');
+            }
           }catch (e) {
                 message.error('Sign out failed');
             }
