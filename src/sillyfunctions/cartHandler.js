@@ -9,6 +9,13 @@ export class cartHandler extends React.Component {
           cartTotal: 0,
           cartQuantity: 0,
         };
+        // this.addToCart = this.addToCart.bind(this);
+        // this.removeFromCart = this.removeFromCart.bind(this);
+        // this.clearCart = this.clearCart.bind(this);
+        // this.handleCheckout = this.handleCheckout.bind(this);
+    }
+    
+    componentDidMount() {
         this.addToCart = this.addToCart.bind(this);
         this.removeFromCart = this.removeFromCart.bind(this);
         this.clearCart = this.clearCart.bind(this);
@@ -52,6 +59,44 @@ export class cartHandler extends React.Component {
         });
         message.success('Checkout successful');
     }
+
+    // addToCart = (product) => {
+    //   this.setState((state) => ({
+    //     cart: [...state.cart, product],
+    //     cartTotal: state.cartTotal + product.price,
+    //     cartQuantity: state.cartQuantity + 1,
+    //   }));
+    // };
+  
+    // removeFromCart = (product) => {
+    //   this.setState((state) => ({
+    //     cart: state.cart.filter((item) => item.id !== product.id),
+    //     cartTotal: state.cartTotal - product.price,
+    //     cartQuantity: state.cartQuantity - 1,
+    //   }));
+    // };
+  
+    // clearCart = () => {
+    //   this.setState({
+    //     cart: [],
+    //     cartTotal: 0,
+    //     cartQuantity: 0,
+    //   });
+    // };
+  
+    // handleCheckout = () => {
+    //   if (this.state.cart.length === 0) {
+    //     message.warning("Your cart is empty");
+    //     return;
+    //   }
+    //   // Implement the checkout process here, e.g. send a request to the server to process the payment
+    //   this.setState({
+    //     cart: [],
+    //     cartTotal: 0,
+    //     cartQuantity: 0,
+    //   });
+    //   message.success("Checkout successful");
+    // };
 }
 
 // export default cartHandler;
