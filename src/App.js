@@ -11,6 +11,7 @@ import FrontPage from './models/UI';
 import SignIn from './models/SignInAntd';
 import SignUp from './models/SignUpAntd';
 import DeliveryForm from './models/CheckoutForm';
+import './styles/global.css';
 // import VA from './models/ProductView';
 //http://locaasdasd.dasd/SingnIN
 function App() {

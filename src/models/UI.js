@@ -126,7 +126,7 @@ const FrontPage = ({categoryID}) => {
           }
         };
         fetchCategories();
-      }, []);
+      }, [categoryID]);
 
       useEffect(() => {
         const fetchProducts = async () => {
@@ -138,7 +138,7 @@ const FrontPage = ({categoryID}) => {
           }
         };
         fetchProducts();
-      }, [categoryID]);
+      }, []);
 
     const handleMenuClick = async(event) => {
         if (event.key === 'Show All') {
